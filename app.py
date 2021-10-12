@@ -49,7 +49,7 @@ def update_gas(n):
 		propose = g['result']['ProposeGasPrice']
 		fast = g['result']['FastGasPrice']
 		block = g['result']['LastBlock']
-		results = f'Safe: {safe} Gwei,\nPropose: {propose} Gwei,\nFast: {fast} Gwei,\nLast Block {block}'
+		results = f'Safe Gas Price: {safe} Gwei, Propose Gas Price: {propose} Gwei, Fast Gas Price: {fast} Gwei, Last Block {block}'
 	else:
 		results = None
 	return results
