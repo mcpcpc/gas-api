@@ -1,6 +1,5 @@
 import urllib.request
 import json
-import pandas
 import collections
 import dash
 import dash_core_components as dcc
@@ -16,9 +15,8 @@ def fetch_gas(api_key):
         data = json.loads(url.read().decode())
     return data
 
-def fetch_ring_values(buffer, key):
-    return [x['result'][key] for x in buffer]
-
+#def fetch_ring_values(buffer, key):
+#    return [x['result'][key] for x in buffer]
 
 app = dash.Dash(
 	__name__,
@@ -29,7 +27,7 @@ server = app.server
 app.layout = html.Div(
 	children=[
     		html.H2('Gas Tracker'),
-		dcc.Graph(id='live-update-graph'),
+		html.P(id='live-update-text'),
 		dcc.Interval(
 			id='interval-component',
 			interval=1*1000,
@@ -37,6 +35,21 @@ app.layout = html.Div(
 		)
 	]
 )
+
+@app.callback(
+	Output('live-update-text', 'children'),
+	Input('interval-component', 'n_intervals'))
+def update_gas(n):
+	g = fetch_gas(api_key)
+	if g['status'] == '1':
+		safe = g['result']['SafeGasPrice']
+		propose = g['result']['ProposeGasPrice']
+		fast = g['result']['FastGasPrice']
+		results = f'safe: {safe}, propose: {propose}, fast: {fast}'
+	else:
+		results = None
+	return results
 	
+
 if __name__ == '__main__':
     app.run_server(debug=True)
