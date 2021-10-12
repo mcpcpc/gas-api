@@ -37,8 +37,8 @@ app.layout = html.Div(
 )
 
 @app.callback(
-	Output('live-update-text', 'children'),
-	Input('interval-component', 'n_intervals'))
+	dash.Output('live-update-text', 'children'),
+	dash.Input('interval-component', 'n_intervals'))
 def update_gas(n):
 	g = fetch_gas(api_key)
 	if g['status'] == '1':
