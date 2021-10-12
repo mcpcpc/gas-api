@@ -30,7 +30,7 @@ server = app.server
 
 app.layout = html.Div(
 	children=[
-    		html.H2('Gas Tracker'),
+    		html.H2('Etherscan Gas Tracker'),
 		html.P(id='live-update-text'),
 		dcc.Interval(
 			id='interval-component',
