@@ -8,8 +8,7 @@ import os
 api_key = os.getenv('ETHERSCAN_API_KEY')
 
 def fetch_gas(api_key):
-    prefix = 'https://api.etherscan.io/api'
-    query = f'{prefix}?module=gastracker&action=gasoracle&apikey={api_key}'
+    query = f'https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey={api_key}'
     with urllib.request.urlopen(query) as url:
         data = json.loads(url.read().decode())
     return data
