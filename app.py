@@ -13,9 +13,6 @@ def fetch_gas(api_key):
         data = json.loads(url.read().decode())
     return data
 
-#def fetch_ring_values(buffer, key):
-#    return [x['result'][key] for x in buffer]
-
 app = dash.Dash(
 	__name__,
 	update_title=None,
