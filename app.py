@@ -26,33 +26,39 @@ server = app.server
 
 app.layout = html.Div(
 	children=[
+        html.H2('Etherscan Gas Tracker'),
         html.P(id='live-update-block'),
-		daq.Gauge(
-            id='live-update-safe',
-            showCurrentValue=True,
-            units="GWEI",
-            label='Safe Gas Price',
-            max=1000,
-            min=0,
-            value=0
-        ),
-        daq.Gauge(
-            id='live-update-propose',
-            showCurrentValue=True,
-            units="GWEI",
-            label='Propose Gas Price',
-            max=1000,
-            min=0,
-            value=0
-        ),
-        daq.Gauge(
-            id='live-update-fast',
-            showCurrentValue=True,
-            units="GWEI",
-            label='Fast Gas Price',
-            max=1000,
-            min=0,
-            value=0
+        html.Div(
+            className='cards',
+            children=[
+                daq.Gauge(
+                    id='live-update-safe',
+                    showCurrentValue=True,
+                    units="GWEI",
+                    label='Safe Gas Price',
+                    max=1000,
+                    min=0,
+                    value=0
+                ),
+                daq.Gauge(
+                    id='live-update-propose',
+                    showCurrentValue=True,
+                    units="GWEI",
+                    label='Propose Gas Price',
+                    max=1000,
+                    min=0,
+                    value=0
+                ),
+                daq.Gauge(
+                    id='live-update-fast',
+                    showCurrentValue=True,
+                    units="GWEI",
+                    label='Fast Gas Price',
+                    max=1000,
+                    min=0,
+                    value=0
+                ),
+            ],
         ),
 		dcc.Interval(
 			id='interval-component',
