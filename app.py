@@ -27,7 +27,7 @@ app.layout = html.Div(
 	children=[
     		html.H2('Etherscan Gas Tracker'),
 		html.Hr(),
-		html.div(id='live-update-text'),
+		html.Div(id='live-update-text'),
 		dcc.Interval(
 			id='interval-component',
 			interval=1*1000,
