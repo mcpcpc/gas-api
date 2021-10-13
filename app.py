@@ -26,7 +26,8 @@ server = app.server
 app.layout = html.Div(
 	children=[
     		html.H2('Etherscan Gas Tracker'),
-		html.P(id='live-update-text'),
+		html.Hr(),
+		html.div(id='live-update-text'),
 		dcc.Interval(
 			id='interval-component',
 			interval=1*1000,
@@ -48,7 +49,7 @@ def update_gas(n):
 		results = f'Safe Gas Price: {safe} Gwei, Propose Gas Price: {propose} Gwei, Fast Gas Price: {fast} Gwei, Last Block {block}'
 	else:
 		results = None
-	return results
+	return [html.P(results)]
 	
 
 if __name__ == '__main__':
