@@ -41,21 +41,14 @@ app.layout = html.Div(
 	dash.Input('interval-component', 'n_intervals'))
 def update_gas(n):
 	g = fetch_gas(api_key)
-	if g['status'] == '1':
-		safe = g['result']['SafeGasPrice']
-		propose = g['result']['ProposeGasPrice']
-		fast = g['result']['FastGasPrice']
-		block = g['result']['LastBlock']
-		results = f'Safe Gas Price: {safe} Gwei, Propose Gas Price: {propose} Gwei, Fast Gas Price: {fast} Gwei, Last Block {block}'
-	else:
-		results = None
 	return [
 		html.Label('Safe Gas Price'),
-		html.P(safe),
+		html.P(g['result']['SafeGasPrice']),
+		html.Meter(value=int(g['result']['SafeGasPrice']), max=500)
 		html.Label('Propose Gas Price'),
-		html.P(propose),
+		html.P(g['result']['ProposeGasPrice']),
 		html.Label('Fast Gas Price'),
-		html.P(fast),
+		html.P(g['result']['FastGasPrice']),
 	]
 	
 
