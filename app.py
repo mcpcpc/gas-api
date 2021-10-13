@@ -26,6 +26,7 @@ server = app.server
 
 app.layout = html.Div(
 	children=[
+        html.P(id='live-update-block'),
 		daq.Gauge(
             id='live-update-safe',
             showCurrentValue=True,
@@ -39,7 +40,7 @@ app.layout = html.Div(
             id='live-update-propose',
             showCurrentValue=True,
             units="GWEI",
-            label='Suggested Gas Price',
+            label='Propose Gas Price',
             max=1000,
             min=0,
             value=0
@@ -62,17 +63,20 @@ app.layout = html.Div(
 )
 
 @app.callback(
+    dash.Output('live-update-block', 'children'),
 	dash.Output('live-update-safe', 'value'),
     dash.Output('live-update-propose', 'value'),
     dash.Output('live-update-fast', 'value'),
 	dash.Input('interval-component', 'n_intervals'))
 def update_gas(n):
 	g = fetch_gas(api_key)
+	block=safe=propose=fast = 0
 	if g['status'] == '1':
+		block = g['result']['LastBlock']
 		safe = int(g['result']['SafeGasPrice'])
 		propose = int(g['result']['ProposeGasPrice'])
 		fast = int(g['result']['FastGasPrice'])
-	return safe, propose, fast 
+	return f'Last Block: {block}', safe, propose, fast 
 	
 
 if __name__ == '__main__':
