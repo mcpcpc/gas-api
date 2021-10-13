@@ -2,6 +2,11 @@ body {
 	margin: 5%;
 	text-align:center;
 	font-family: "Open Sans", "HelveticaNeue", "Helvetica eue", Helvetica, Arial, sans-serif;
+	background-color: #F2F2F2;
+	color: rgb(50, 50, 50);
+	font-weight: 400;
+	font-size: 1.5em;
+	line-height: 1.6;
 }
 
 .cards {
@@ -10,3 +15,6 @@ body {
 	grid-auto-rows: auto;
 	grid-gap: 1rem;
 }
+
+
+
