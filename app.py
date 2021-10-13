@@ -3,7 +3,6 @@ import json
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.graph_objects as go
 import os
 
 api_key = os.getenv('ETHERSCAN_API_KEY')
@@ -28,11 +27,6 @@ app.layout = html.Div(
 	children=[
     		html.H2('Etherscan Gas Tracker'),
 		html.P(id='live-update-text'),
-		go.Figure(go.Indicator(
-			mode = "gauge+number",
-			value = 270,
-			domain = {'x': [0, 1], 'y': [0, 1]},
-			title = {'text': "Speed"})),
 		dcc.Interval(
 			id='interval-component',
 			interval=1*1000,
