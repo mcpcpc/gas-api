@@ -28,7 +28,7 @@ app.layout = html.Div(
 	children=[
     		html.H2('Etherscan Gas Tracker'),
 		html.P(id='live-update-text'),
-		fig = go.Figure(go.Indicator(
+		go.Figure(go.Indicator(
 			mode = "gauge+number",
 			value = 270,
 			domain = {'x': [0, 1], 'y': [0, 1]},
