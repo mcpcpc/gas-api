@@ -44,7 +44,7 @@ def update_gas(n):
 	return [
 		html.Label('Safe Gas Price'),
 		html.P(g['result']['SafeGasPrice']),
-		html.Meter(value=int(g['result']['SafeGasPrice']), max=500)
+		html.Meter(value=int(g['result']['SafeGasPrice']), max=500),
 		html.Label('Propose Gas Price'),
 		html.P(g['result']['ProposeGasPrice']),
 		html.Label('Fast Gas Price'),
