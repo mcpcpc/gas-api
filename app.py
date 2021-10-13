@@ -28,6 +28,18 @@ app.layout = html.Div(
 	children=[
     		html.H2('Etherscan Gas Tracker'),
 		html.P(id='live-update-text'),
+		go.Figure(
+			go.Indicator(
+				title = {'text': "Safe Gas Price"}
+				value = 100,
+				mode = 'number+gauge',
+				gauge = {
+					'shape': "bullet",
+					'axis': {'range': [None, 500]},
+				},
+				domain = {'x': [0, 1], 'y': [0, 1]},
+			)
+		),
 		dcc.Interval(
 			id='interval-component',
 			interval=1*1000,
