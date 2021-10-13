@@ -1,6 +1,7 @@
 import urllib.request
 import json
 import dash
+import dash_daq as daq
 from dash import dcc
 from dash import html
 import os
@@ -25,79 +26,32 @@ server = app.server
 
 app.layout = html.Div(
 	children=[
-		html.Div(
-            className='metric',
-            children=[
-                html.Div(className='metric',
-                    children=[
-                        html.Div(className='metric-inner',
-                            children=[
-                                html.Header(className='metric-header',
-                                    children=[
-                                        html.H1('Safe Gas Price', className='metric-title'),
-                                    ],	
-                                ),
-                                html.Div(className='metric-body',
-                                    children=[
-                                        html.Div(className='value',
-                                            children=[
-                                                html.H1(id='live-update-safe'),
-                                                html.H2('GWEI'),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                html.Div(className='metric',
-                    children=[
-                        html.Div(className='metric-inner',
-                            children=[
-                                html.Header(className='metric-header',
-                                    children=[
-                                        html.H1('Propose Gas Price', className='metric-title'),
-                                    ],	
-                                ),
-                                html.Div(className='metric-body',
-                                    children=[
-                                        html.Div(className='value',
-                                            children=[
-                                                html.H1(id='live-update-propose'),
-                                                html.H2('GWEI'),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                html.Div(className='metric',
-                    children=[
-                        html.Div(className='metric-inner',
-                            children=[
-                                html.Header(className='metric-header',
-                                    children=[
-                                        html.H1('Fast Gas Price', className='metric-title'),
-                                    ],	
-                                ),
-                                html.Div(className='metric-body',
-                                    children=[
-                                        html.Div(className='value',
-                                            children=[
-                                                html.H1(id='live-update-fast'),
-                                                html.H2('GWEI'),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-            ],
+		daq.Gauge(
+            id='live-update-safe',
+            showCurrentValue=True,
+            units="GWEI",
+            label='Safe Gas Price',
+            max=1000,
+            min=0,
+            value=0
+        ),
+        daq.Gauge(
+            id='live-update-propose',
+            showCurrentValue=True,
+            units="GWEI",
+            label='Propose Gas Price',
+            max=1000,
+            min=0,
+            value=0
+        ),
+        daq.Gauge(
+            id='live-update-fast',
+            showCurrentValue=True,
+            units="GWEI",
+            label='Fast Gas Price',
+            max=1000,
+            min=0,
+            value=0
         ),
 		dcc.Interval(
 			id='interval-component',
@@ -108,13 +62,17 @@ app.layout = html.Div(
 )
 
 @app.callback(
-	dash.Output('live-update-safe', 'children'),
-    dash.Output('live-update-propose', 'children'),
-    dash.Output('live-update-fast', 'children'),
+	dash.Output('live-update-safe', 'value'),
+    dash.Output('live-update-propose', 'value'),
+    dash.Output('live-update-fast', 'value'),
 	dash.Input('interval-component', 'n_intervals'))
 def update_gas(n):
 	g = fetch_gas(api_key)
-	return g['result']['SafeGasPrice'],g['result']['ProposeGasPrice'],g['result']['FastGasPrice']
+	if g['status'] == '1':
+		safe = int(g['result']['SafeGasPrice'])
+		propose = int(g['result']['ProposeGasPrice'])
+		fast = int(g['result']['FastGasPrice'])
+	return safe, propose, fast 
 	
 
 if __name__ == '__main__':
