@@ -49,7 +49,14 @@ def update_gas(n):
 		results = f'Safe Gas Price: {safe} Gwei, Propose Gas Price: {propose} Gwei, Fast Gas Price: {fast} Gwei, Last Block {block}'
 	else:
 		results = None
-	return [html.P(results)]
+	return [
+		html.Label('Safe Gas Price'),
+		html.P(safe),
+		html.Label('Propose Gas Price'),
+		html.P(propose),
+		html.Label('Fast Gas Price'),
+		html.P(fast),
+	]
 	
 
 if __name__ == '__main__':
