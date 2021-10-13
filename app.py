@@ -25,9 +25,42 @@ server = app.server
 
 app.layout = html.Div(
 	children=[
-    		html.H2('Etherscan Gas Tracker'),
-		html.Hr(),
-		html.Div(id='live-update-text'),
+		html.Div(
+            className='metric',
+            children=[
+                html.Div(
+                    className='metric',
+                    children=[
+                        html.Div(
+                            className='metric-inner',
+                            children=[
+                                html.Header(
+                                    className='metric-header',
+                                    children=[
+                                        html.H1(
+                                            className='metric-title',
+                                            value='Safe Gas Price'
+                                        ),
+                                    ],	
+                                ),
+                                html.Div(
+                                    className='metric-body',
+                                    children=[
+                                        html.Div(
+                                            className='value',
+                                            children=[
+                                                html.H1(id='live-update-safe'),
+                                                html.H2('GWEI'),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
 		dcc.Interval(
 			id='interval-component',
 			interval=1*1000,
@@ -37,43 +70,11 @@ app.layout = html.Div(
 )
 
 @app.callback(
-	dash.Output('live-update-text', 'children'),
+	dash.Output('live-update-safe', 'children'),
 	dash.Input('interval-component', 'n_intervals'))
 def update_gas(n):
 	g = fetch_gas(api_key)
-	return [
-		html.Div(
-			className='metric',
-			children=[
-				html.Div(
-					className='metric-inner',
-					children=[
-						html.Header(
-							className='metric-header',
-							children=[
-								html.H1(
-									className='metric-title',
-									value='Safe Gas Price'
-								),
-							],	
-						),
-						html.Div(
-							className='metric-body',
-							children=[
-								html.Div(
-									className='value',
-									children=[
-										html.H1(g['result']['SafeGasPrice']),
-										html.H2('GWEI'),
-									],
-								),
-							],
-						),
-					],
-				),
-			],
-		),
-	]
+	return g['result']['SafeGasPrice']
 	
 
 if __name__ == '__main__':
