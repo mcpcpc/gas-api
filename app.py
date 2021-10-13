@@ -1,8 +1,8 @@
 import urllib.request
 import json
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import os
 
 api_key = os.getenv('ETHERSCAN_API_KEY')
@@ -28,28 +28,66 @@ app.layout = html.Div(
 		html.Div(
             className='metric',
             children=[
-                html.Div(
-                    className='metric',
+                html.Div(className='metric',
                     children=[
-                        html.Div(
-                            className='metric-inner',
+                        html.Div(className='metric-inner',
                             children=[
-                                html.Header(
-                                    className='metric-header',
+                                html.Header(className='metric-header',
                                     children=[
-                                        html.H1(
-                                            className='metric-title',
-                                            value='Safe Gas Price'
-                                        ),
+                                        html.H1('Safe Gas Price', className='metric-title'),
                                     ],	
                                 ),
-                                html.Div(
-                                    className='metric-body',
+                                html.Div(className='metric-body',
                                     children=[
-                                        html.Div(
-                                            className='value',
+                                        html.Div(className='value',
                                             children=[
                                                 html.H1(id='live-update-safe'),
+                                                html.H2('GWEI'),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                html.Div(className='metric',
+                    children=[
+                        html.Div(className='metric-inner',
+                            children=[
+                                html.Header(className='metric-header',
+                                    children=[
+                                        html.H1('Propose Gas Price', className='metric-title'),
+                                    ],	
+                                ),
+                                html.Div(className='metric-body',
+                                    children=[
+                                        html.Div(className='value',
+                                            children=[
+                                                html.H1(id='live-update-propose'),
+                                                html.H2('GWEI'),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                html.Div(className='metric',
+                    children=[
+                        html.Div(className='metric-inner',
+                            children=[
+                                html.Header(className='metric-header',
+                                    children=[
+                                        html.H1('Fast Gas Price', className='metric-title'),
+                                    ],	
+                                ),
+                                html.Div(className='metric-body',
+                                    children=[
+                                        html.Div(className='value',
+                                            children=[
+                                                html.H1(id='live-update-fast'),
                                                 html.H2('GWEI'),
                                             ],
                                         ),
@@ -71,10 +109,12 @@ app.layout = html.Div(
 
 @app.callback(
 	dash.Output('live-update-safe', 'children'),
+    dash.Output('live-update-propose', 'children'),
+    dash.Output('live-update-fast', 'children'),
 	dash.Input('interval-component', 'n_intervals'))
 def update_gas(n):
 	g = fetch_gas(api_key)
-	return g['result']['SafeGasPrice']
+	return g['result']['SafeGasPrice'],g['result']['ProposeGasPrice'],g['result']['FastGasPrice']
 	
 
 if __name__ == '__main__':
