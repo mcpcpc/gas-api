@@ -42,11 +42,11 @@ app.layout = html.Div(
 def update_gas(n):
 	g = fetch_gas(api_key)
 	return [
-		html.P(f'Safe Gas Price: {g['result']['SafeGasPrice']} GWEI'),
+		html.P(f"Safe Gas Price: {g['result']['SafeGasPrice']} GWEI"),
 		html.Meter(value=int(g['result']['SafeGasPrice']), max=500, high=200),
-		html.P(f'Propose Gas Price: {g['result']['ProposeGasPrice']} GWEI'),
+		html.P(f"Propose Gas Price: {g['result']['ProposeGasPrice']} GWEI"),
 		html.Meter(value=int(g['result']['ProposeGasPrice']), max=500, high=200),
-		html.P(f'Fast Gas Price: {g['result']['ProposeGasPrice']} GWEI'),
+		html.P(f"Fast Gas Price: {g['result']['FastGasPrice']} GWEI"),
 		html.Meter(value=int(g['result']['FastGasPrice']), max=500, high=200),
 	]
 	
