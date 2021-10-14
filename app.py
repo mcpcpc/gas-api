@@ -27,7 +27,6 @@ server = app.server
 app.layout = html.Div(
 	children=[
         html.H2('Etherscan Gas Tracker'),
-        html.P(id='live-update-block'),
         html.Div(
             className='cards',
             children=[
@@ -60,6 +59,7 @@ app.layout = html.Div(
                 ),
             ],
         ),
+		html.P(id='live-update-block'),
 		dcc.Interval(
 			id='interval-component',
 			interval=1*1000,
