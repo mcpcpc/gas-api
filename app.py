@@ -14,14 +14,7 @@ def fetch_gas(api_key):
         data = json.loads(url.read().decode())
     return data
 
-app = dash.Dash(
-	__name__,
-	update_title=None,
-	meta_tags=[
-		{'name':'viewport','content':'width=device-width, initial-scale=1'}
-	],
-	external_stylesheets=[]
-)
+app = dash.Dash(__name__, update_title=None)
 server = app.server
 
 app.layout = html.Div(
